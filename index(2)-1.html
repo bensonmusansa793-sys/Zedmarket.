@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ZedMarket is a marketplace concept for discovering Zambian products, services and international suppliers.">
+<title>ZedMarket | Zambia's Marketplace</title>
+<style>
+:root{--navy:#102b46;--blue:#1769aa;--gold:#f3b63f;--ink:#172536;--muted:#657487;--bg:#f4f7fb;--white:#fff;--line:#e4eaf1;--green:#16845b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select{font:inherit}button{cursor:pointer}
+header{background:var(--navy);color:white;padding:15px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;position:sticky;top:0;z-index:5;box-shadow:0 3px 12px #061a2b30}
+.logo{font-size:1.4rem;font-weight:800;letter-spacing:.2px}.logo span{color:var(--gold)}
+nav{display:flex;align-items:center;gap:17px;flex-wrap:wrap}nav a{color:#eaf2fa;text-decoration:none;font-size:.91rem}
+.nav-cart{background:var(--gold);color:#172536;border:0;border-radius:9px;padding:9px 13px;font-weight:700}
+.hero{background:linear-gradient(120deg,#102b46,#1c5685);color:white;padding:48px 5%}
+.hero-inner{max-width:1120px;margin:auto}.eyebrow{color:#ffd77e;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:.75rem}
+h1{font-size:clamp(2rem,5vw,3.45rem);line-height:1.06;margin:12px 0}
+.hero p{color:#d9e6f2;max-width:650px;line-height:1.6}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{border:0;border-radius:9px;padding:12px 17px;background:var(--gold);color:#172536;font-weight:700}
+.btn.secondary{background:#ffffff18;color:white;border:1px solid #ffffff60}
+.searchbar{display:flex;max-width:720px;margin-top:20px;background:white;padding:6px;border-radius:12px;gap:6px}
+.searchbar input{flex:1;min-width:0;border:0;padding:13px;font-size:1rem;outline:none}
+.wrap{max-width:1120px;margin:auto;padding:30px 5%}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:17px}
+h2{margin:0;font-size:1.5rem}.muted{color:var(--muted);font-size:.92rem}
+.categories{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.cat{background:white;border:1px solid var(--line);padding:15px 10px;border-radius:13px;text-align:center;font-weight:700;color:var(--ink)}
+.cat span{display:block;font-size:1.65rem;margin-bottom:7px}.cat.active{border:2px solid var(--blue);background:#edf6ff}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:17px 0}
+.chip{background:white;border:1px solid var(--line);border-radius:30px;padding:8px 13px;color:var(--ink)}
+.chip.active{background:var(--navy);color:white;border-color:var(--navy)}
+.sort{border:1px solid var(--line);background:white;border-radius:8px;padding:8px;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{background:white;border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.product-art{height:142px;display:grid;place-items:center;font-size:3.4rem;background:linear-gradient(135deg,#e8f1fa,#f8f4e9)}
+.card-body{padding:14px;display:flex;flex-direction:column;flex:1}
+.tag{font-size:.7rem;color:#1769aa;font-weight:700;text-transform:uppercase;letter-spacing:.7px}
+.card h3{margin:7px 0;font-size:1.02rem}.price{font-weight:800;color:var(--navy);margin:7px 0}
+.card p{font-size:.86rem;color:var(--muted);line-height:1.45;flex:1}
+.card-actions{display:flex;gap:7px;margin-top:8px}
+.card-actions button{flex:1;background:#eaf3fb;color:#14578e;border:0;border-radius:8px;padding:10px 7px;font-weight:700;font-size:.83rem}
+.card-actions .add{background:var(--navy);color:white}
+.empty{display:none;padding:24px;background:white;border-radius:12px;color:var(--muted)}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px}
+.global-banner{background:#102b46;color:white;border-radius:16px;padding:24px;margin-bottom:18px}
+.global-banner p{color:#d9e6f2;line-height:1.55;max-width:720px}
+.supplier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.supplier-card{background:white;border:1px solid var(--line);border-radius:14px;padding:17px}
+.supplier-card .flag{font-size:2rem}.supplier-card h3{margin:8px 0}.supplier-card p{font-size:.87rem;color:var(--muted);line-height:1.5}
+.supplier-meta{font-size:.72rem;color:#1769aa;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.supplier-card button{background:#eaf3fb;color:#14578e;width:100%;border:0;border-radius:8px;padding:10px;font-weight:700}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.info{background:white;border:1px solid var(--line);border-radius:13px;padding:17px}
+.info b{display:block;margin:7px 0}.info p{color:var(--muted);font-size:.88rem;line-height:1.5;margin-bottom:0}
+.notice{background:#fff8e8;border:1px solid #f2dfb2;border-radius:10px;padding:13px 15px;color:#70551a;font-size:.84rem;line-height:1.5;margin-top:18px}
+footer{background:#0b2035;color:#d8e4ef;padding:26px 5%;font-size:.87rem}
+footer .foot{max-width:1120px;margin:auto;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+dialog{border:0;border-radius:15px;padding:23px;max-width:470px;width:calc(100% - 28px);box-shadow:0 15px 60px #0003;color:var(--ink)}
+dialog::backdrop{background:#08182799}dialog h3{margin-top:0}
+dialog button{border:0;border-radius:8px;padding:10px 15px;background:var(--navy);color:white;font-weight:700}
+.dialog-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.cart-list{padding-left:18px;line-height:1.8}
+.small{font-size:.8rem;color:var(--muted)}
+@media(max-width:800px){.categories{grid-template-columns:repeat(3,1fr)}.grid,.supplier-grid{grid-template-columns:repeat(2,1fr)}.info-grid{grid-template-columns:1fr}}
+@media(max-width:520px){header{position:static}.grid,.supplier-grid{grid-template-columns:1fr}.categories{grid-template-columns:repeat(2,1fr)}.hero{padding-top:38px}.searchbar{flex-direction:column}.searchbar button{width:100%}nav{gap:11px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🇿🇲 Zed<span>Market</span></div>
+  <nav><a href="#shop">Shop</a><a href="#global">Global suppliers</a><a href="#how">How it works</a><button class="nav-cart" id="cartButton">Basket (<span id="cartCount">0</span>)</button></nav>
+</header>
+<section class="hero">
+ <div class="hero-inner">
+  <div class="eyebrow">One marketplace · Local and global</div>
+  <h1>Find what you need.<br>Grow your business.</h1>
+  <p>Explore products and services from Zambian sellers, and discover international sourcing opportunities from suppliers around the world.</p>
+  <div class="searchbar"><input id="search" type="search" placeholder="Search products, services or categories..." aria-label="Search marketplace"><button class="btn" id="searchBtn">Search</button></div>
+  <div class="hero-actions"><a class="btn" href="#shop" style="text-decoration:none">Explore marketplace</a><a class="btn secondary" href="#global" style="text-decoration:none">Find global suppliers</a></div>
+ </div>
+</section>
+<main class="wrap">
+ <section>
+  <div class="section-head"><div><h2>Shop by category</h2><div class="muted">Browse a wide range of products and services</div></div></div>
+  <div class="categories" id="categories">
+   <button class="cat active" data-category="All"><span>🛍️</span>All</button>
+   <button class="cat" data-category="Fashion"><span>👟</span>Fashion</button>
+   <button class="cat" data-category="Electronics"><span>📱</span>Electronics</button>
+   <button class="cat" data-category="Food"><span>🍲</span>Food</button>
+   <button class="cat" data-category="Home"><span>🪑</span>Home</button>
+   <button class="cat" data-category="Services"><span>🧰</span>Services</button>
+   <button class="cat" data-category="Beauty"><span>💇</span>Beauty</button>
+   <button class="cat" data-category="Agriculture"><span>🌱</span>Agriculture</button>
+   <button class="cat" data-category="Automotive"><span>🚗</span>Automotive</button>
+   <button class="cat" data-category="Construction"><span>🧱</span>Construction</button>
+   <button class="cat" data-category="Education"><span>📚</span>Education</button>
+   <button class="cat" data-category="Other"><span>✨</span>Other</button>
+  </div>
+ </section>
+ <section id="shop" style="margin-top:36px">
+  <div class="section-head"><div><h2>Explore listings</h2><div class="muted">Sample products to demonstrate the marketplace</div></div><select class="sort" id="sort"><option value="featured">Sort: Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></div>
+  <div class="toolbar" id="filters"><button class="chip active" data-filter="All">All listings</button><button class="chip" data-filter="Zambia">🇿🇲 From Zambia</button><button class="chip" data-filter="International">🌍 International</button></div>
+  <div class="grid" id="listings">
+   <article class="card" data-category="Fashion" data-origin="Zambia" data-price="350" data-search="sneakers shoes fashion">
+    <div class="product-art">👟</div><div class="card-body"><div class="tag">Fashion · Zambia · Demo</div><h3>Everyday Sneakers</h3><div class="price">Example price: K350</div><p>Sample local fashion listing. No real seller is attached.</p><div class="card-actions"><button data-detail="Everyday Sneakers">Details</button><button class="add" data-add="Everyday Sneakers">Add to basket</button></div></div>
+   </article>
+   <article class="card" data-category="Electronics" data-origin="International" data-price="220" data-search="headphones electronics china accessories">
+    <div class="product-art">🎧</div><div class="card-body"><div class="tag">Electronics · International · Demo</div><h3>Wireless Headphones</h3><div class="price">Example price: K220</div><p>Illustrative imported-product listing. Shipping and duties are not included.</p><div class="card-actions"><button data-detail="Wireless Headphones">Details</button><button class="add" data-add="Wireless Headphones">Add to basket</button></div></div>
+   </article>
+   <article class="card" data-category="Food" data-origin="Zambia" data-price="85" data-search="food lunch meal restaurant">
+    <div class="product-art">🍱</div><div class="card-body"><div class="tag">Food · Zambia · Demo</div><h3>Lunch Combo</h3><div class="price">Example price: K85</div><p>Sample restaurant offer. No real restaurant is attached.</p><div class="card-actions"><button data-detail="Lunch Combo">Details</button><button class="add" data-add="Lunch Combo">Add to basket</button></div></div>
+   </article>
+   <article class="card" data-category="Home" data-origin="International" data-price="480" data-search="chair furniture home decor supplier">
+    <div class="product-art">🪑</div><div class="card-body"><div class="tag">Home · International · Demo</div><h3>Study Chair</h3><div class="price">Example price: K480</div><p>Illustrative sourcing listing. Final landed cost needs a shipping and tax quote.</p><div class="card-actions"><button data-detail="Study Chair">Details</button><button class="add" data-add="Study Chair">Add to basket</button></div></div>
+   </article>
+   <article class="card" data-category="Services" data-origin="Zambia" data-price="50" data-search="graphic design poster service">
+    <div class="product-art">🎨</div><div class="card-body"><div class="tag">Services · Zambia · Demo</div><h3>Poster Design</h3><div class="price">Example price: K50</div><p>Sample creative service listing. No real provider is attached.</p><div class="card-actions"><button data-detail="Poster Design">Details</button><button class="add" data-add="Poster Design">Add to basket</button></div></div>
+   </article>
+   <article class="card" data-category="Agriculture" data-origin="International" data-price="900" data-search="agriculture irrigation equipment farm">
+    <div class="product-art">🌱</div><div class="card-body"><div class="tag">Agriculture · International · Demo</div><h3>Drip Irrigation Kit</h3><div class="price">Example price: K900</div><p>Illustrative farm equipment listing. Confirm specifications and landed costs.</p><div class="card-actions"><button data-detail="Drip Irrigation Kit">Details</button><button class="add" data-add="Drip Irrigation Kit">Add to basket</button></div></div>
+   </article>
+  </div>
+  <div class="empty" id="empty">No matching listings. Try another search or category.</div>
+ </section>
+ <section id="global" style="margin-top:42px">
+  <div class="global-banner"><div class="eyebrow">ZedMarket Global</div><h2>Source products from around the world</h2><p>Explore international supplier markets and prepare requests for quotations. Compare minimum order quantities, product specifications, shipping and estimated import costs before deciding.</p></div>
+  <div class="section-head"><div><h2>Explore supplier markets</h2><div class="muted">Country and product categories for future supplier discovery</div></div></div>
+  <div class="toolbar" id="supplierFilters"><button class="chip active" data-country="All">All countries</button><button class="chip" data-country="China">🇨🇳 China</button><button class="chip" data-country="South Africa">🇿🇦 South Africa</button><button class="chip" data-country="India">🇮🇳 India</button><button class="chip" data-country="Turkey">🇹🇷 Turkey</button><button class="chip" data-country="UAE">🇦🇪 UAE</button></div>
+  <div class="supplier-grid" id="suppliers">
+   <article class="supplier-card" data-country="China"><div class="flag">🇨🇳</div><div class="supplier-meta">China · Sample category</div><h3>Electronics and accessories</h3><p>Explore phone accessories, small electronics and components.</p><button data-supplier="China — Electronics and accessories">Prepare enquiry</button></article>
+   <article class="supplier-card" data-country="South Africa"><div class="flag">🇿🇦</div><div class="supplier-meta">South Africa · Sample category</div><h3>Wholesale and retail goods</h3><p>Explore packaged goods, clothing and regional distribution.</p><button data-supplier="South Africa — Wholesale and retail goods">Prepare enquiry</button></article>
+   <article class="supplier-card" data-country="India"><div class="flag">🇮🇳</div><div class="supplier-meta">India · Sample category</div><h3>Textiles and manufacturing</h3><p>Explore fabric, garments and selected manufactured products.</p><button data-supplier="India — Textiles and manufacturing">Prepare enquiry</button></article>
+   <article class="supplier-card" data-country="Turkey"><div class="flag">🇹🇷</div><div class="supplier-meta">Turkey · Sample category</div><h3>Clothing and home products</h3><p>Explore clothing, footwear, furnishings and homeware.</p><button data-supplier="Turkey — Clothing and home products">Prepare enquiry</button></article>
+   <article class="supplier-card" data-country="UAE"><div class="flag">🇦🇪</div><div class="supplier-meta">UAE · Sample category</div><h3>Trading and distribution</h3><p>Explore regional wholesalers and trading companies.</p><button data-supplier="UAE — Trading and distribution">Prepare enquiry</button></article>
+   <article class="supplier-card" data-country="China"><div class="flag">🌍</div><div class="supplier-meta">International · Sample category</div><h3>Machinery and equipment</h3><p>Explore equipment categories for agriculture and workshops.</p><button data-supplier="International — Machinery and equipment">Prepare enquiry</button></article>
+  </div>
+ </section>
+ <section id="how" style="margin-top:42px">
+  <div class="section-head"><div><h2>How ZedMarket should work</h2><div class="muted">The plan for turning this demo into a real marketplace</div></div></div>
+  <div class="info-grid">
+   <div class="info"><span>🛒</span><b>Discover and compare</b><p>Customers search local listings and explore international supplier offers.</p></div>
+   <div class="info"><span>🏪</span><b>Seller storefronts</b><p>Approved businesses create profiles, upload products and manage enquiries.</p></div>
+   <div class="info"><span>🌍</span><b>International sourcing</b><p>Buyers request quotations and compare minimum order quantities, shipping and landed costs.</p></div>
+   <div class="info"><span>🛡️</span><b>Trust and verification</b><p>Business identity, supplier documents, product claims and reviews need checks before trust badges are shown.</p></div>
+   <div class="info"><span>📦</span><b>Orders and delivery</b><p>Later versions can add order tracking and approved delivery partners.</p></div>
+   <div class="info"><span>💳</span><b>Safe payments</b><p>Payments should only be added through compliant providers after adult-led legal and security setup.</p></div>
+  </div>
+  <div class="notice"><strong>Prototype safety note:</strong> Sample products, prices and supplier categories are fictional examples, not verified offers. The basket works only in this browser session and does not place orders or collect payments. Supplier enquiry buttons show a draft message only. Do not send money or personal information based on demo listings.</div>
+ </section>
+</main>
+<footer><div class="foot"><div><strong>🇿🇲 ZedMarket</strong><br>Local and global marketplace concept</div><div>Built as a prototype in Zambia.<br>© <span id="year"></span> ZedMarket</div></div></footer>
+<dialog id="modal"><h3 id="modalTitle">Listing details</h3><p id="modalText"></p><div class="dialog-actions"><button id="modalClose">Close</button></div></dialog>
+<dialog id="cartModal"><h3>Your demo basket</h3><div id="cartContents"></div><p class="small">This basket is only a local demo. No order or payment will be made.</p><div class="dialog-actions"><button id="clearCart" style="background:#eef2f6;color:#172536">Clear basket</button><button id="cartClose">Close</button></div></dialog>
+<script>
+let selectedCategory='All',originFilter='All',basket=[];
+const $=id=>document.getElementById(id),cards=[...document.querySelectorAll('.card')],empty=$('empty'),modal=$('modal');
+function updateListings(){
+ const q=$('search').value.trim().toLowerCase();let count=0;
+ cards.forEach(c=>{
+  const cat=selectedCategory==='All'||c.dataset.category===selectedCategory;
+  const origin=originFilter==='All'||c.dataset.origin===originFilter;
+  const text=(c.dataset.search+' '+c.innerText).toLowerCase().includes(q);
+  const show=cat&&origin&&text;c.style.display=show?'':'none';if(show)count++;
+ });
+ empty.style.display=count?'none':'block';
+}
+document.querySelectorAll('.cat').forEach(b=>b.addEventListener('click',()=>{
+ selectedCategory=b.dataset.category;
+ document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('active',x===b));updateListings();
+}));
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{
+ originFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));updateListings();
+}));
+$('search').addEventListener('input',updateListings);$('searchBtn').addEventListener('click',updateListings);
+$('sort').addEventListener('change',()=>{
+ const grid=$('listings'),visible=cards.filter(c=>c.style.display!=='none');
+ visible.sort((a,b)=>$('sort').value==='low'?+a.dataset.price-+b.dataset.price:$('sort').value==='high'?+b.dataset.price-+a.dataset.price:0).forEach(c=>grid.appendChild(c));
+});
+function showModal(title,text){$('modalTitle').textContent=title;$('modalText').textContent=text;modal.showModal()}
+document.querySelectorAll('[data-detail]').forEach(b=>b.addEventListener('click',()=>showModal(b.dataset.detail,'This is an illustrative demo listing. In a live marketplace, this page would show seller details, product specifications, stock status, delivery terms and verified reviews.')));
+document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{basket.push(b.dataset.add);$('cartCount').textContent=basket.length;b.textContent='Added ✓';setTimeout(()=>b.textContent='Add to basket',1000)}));
+function renderCart(){const box=$('cartContents');if(!basket.length){box.textContent='Your basket is empty.';return}const ul=document.createElement('ul');ul.className='cart-list';basket.forEach(x=>{const li=document.createElement('li');li.textContent=x;ul.appendChild(li)});box.replaceChildren(ul)}
+$('cartButton').addEventListener('click',()=>{renderCart();$('cartModal').showModal()});
+$('cartClose').addEventListener('click',()=>$('cartModal').close());
+$('clearCart').addEventListener('click',()=>{basket=[];$('cartCount').textContent='0';renderCart()});
+$('modalClose').addEventListener('click',()=>modal.close());
+document.querySelectorAll('[data-country]').forEach(b=>b.addEventListener('click',()=>{
+ const country=b.dataset.country;document.querySelectorAll('[data-country]').forEach(x=>x.classList.toggle('active',x===b));
+ document.querySelectorAll('.supplier-card').forEach(c=>c.style.display=country==='All'||c.dataset.country===country?'':'none');
+}));
+document.querySelectorAll('[data-supplier]').forEach(b=>b.addEventListener('click',()=>{
+ const subject=b.dataset.supplier;
+ showModal('Supplier enquiry draft','Hello, I am interested in '+subject+'. Please provide your registered company name, business registration details, product catalogue, specifications, minimum order quantity, unit pricing, sample policy, shipping options to Zambia, estimated delivery time and all additional charges. This is a draft only. Have a trusted adult independently verify any supplier before sharing details or making payments.');
+}));
+$('year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
